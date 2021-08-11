@@ -5,6 +5,7 @@ import {
   hasMany,
   belongsTo,
   RestSerializer,
+  Factory,
 } from "miragejs";
 
 export default function () {
@@ -22,6 +23,12 @@ export default function () {
       }),
       reminder: Model.extend({
         list: belongsTo(),
+      }),
+    },
+
+    factories: {
+      reminder: Factory.extend({
+        text: "Reminder text",
       }),
     },
 
