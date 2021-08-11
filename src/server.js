@@ -15,7 +15,7 @@ export default function () {
 
     routes() {
       const path = "/api/reminders";
-      this.get("/api/reminders", (schema) => {
+      this.get(path, (schema) => {
         return schema.reminders.all();
       });
 
@@ -24,6 +24,10 @@ export default function () {
 
         return schema.reminders.create(attrs);
       });
+
+      this.delete(`${path}/:id`, (schema, { params }) =>
+        schema.reminders.find(params.id).destroy()
+      );
     },
   });
 }
