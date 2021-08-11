@@ -1,24 +1,22 @@
 // Welcome to the tutorial!
-import { createServer } from "miragejs";
+import { createServer, Model } from "miragejs";
 
 export default function () {
   createServer({
+    models: {
+      reminder: Model
+    },
     routes() {
       const path = "/api/reminders";
-      this.get(path, () => ({
-        reminders: [
-          { id: 1, text: "Walk the dog" },
-          { id: 2, text: "Walk the cat" },
-          { id: 3, text: "Walk the dogat" },
-        ],
-      }));
+      this.get("/api/reminders", (schema) => {
+        return schema.reminders.all()
+      })
 
-      let ID = 4
+
       this.post(path, (schema, req) => {
         let attrs = JSON.parse(req.requestBody);
-        attrs.id = ID++;
-
-        return { reminder: attrs };
+        
+        return schema.reminders.create(attrs)
       });
     },
   });
